@@ -1,0 +1,25 @@
+//define your own UTType e.g. ndjson
+private let ndjson: UTType = {
+    let type = UTType(
+        tag: "ndjson",
+        tagClass: .filenameExtension,
+        conformingTo: .text
+    )
+
+    print("UTType ndjson:", type as Any)
+    print("preferred ext:", type?.preferredFilenameExtension as Any)
+    print("identifier:", type?.identifier as Any)
+
+    return type ?? .text
+}()
+
+
+.fileImporter(
+    isPresented: $showingImporter,
+    allowedContentTypes: [ndjson],
+    allowsMultipleSelection: false
+) { result in
+    Task {
+          await handleImport(result)
+    }
+}
